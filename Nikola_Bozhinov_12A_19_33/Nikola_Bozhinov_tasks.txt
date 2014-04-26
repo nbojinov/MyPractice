@@ -1,0 +1,32 @@
+//FOREIGN KEY (column) REFERENCES otherTable(otherColumn)
+//Unique
+Part 1 & 2
+Create database test40;
+Use test40;
+Create table Article(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,content varchar(200),created_on date,published_on date);
+Create table Category(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,date_created_on date,created_by varchar(80));
+Create table User(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,password varchar(30),picture_url varchar(80),income float);
+Create table Tag(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,description varchar(30),name varchar(30));
+Create table C_T(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,c_id int,t_id int,FOREIGN KEY (c_id) REFERENCES Category(id),FOREIGN KEY (t_id) REFERENCES Tag(id));
+Create table A_U(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,a_id int,u_id int,FOREIGN KEY (a_id) REFERENCES Article(id),FOREIGN KEY (u_id) REFERENCES User(id));
+
+Part 3
+Insert into Article(content,created_on,published_on) values ('sdfsd','1992-1-1','1992-1-2'),('sdasdfsd','1992-1-3','1992-1-4');
+Insert into Category(date_created_on,created_by) values ('1992-1-5','asdasd'),('1992-1-6','sddfsdfdsf');
+Insert into User(password,picture_url,income) values ('sdfsdf','asdasdas',10),('sdfsdf','asdasdfd',12);
+Insert into Tag(description,name) values ('sdfsghasdf','ffsdfdsf'),('sdfgsdf','fgdsfgdg');
+Insert into C_T(c_id,t_id) values (1,1),(2,2);
+Insert into A_U(a_id,u_id) values (1,2),(2,1);
+
+Part 4
+
+Select Article.id From Category,C_T,Tag,Article Where Category.id=1 AND Category.id=C_T.c_id AND C_T.t_id=Tag.id AND Tag.id=Article.id;
+
+Part 6
+Create table Tag_part1(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,description varchar(30));
+Insert into Tag_part1(description) select description from Tag;
+Alter table Tag drop column description;
+Rename table Tag to Tag_part2;
+
+Part 8
+Select User.id From Tag_part1,Article,A_U,User Where Tag_part1.id=2 AND Tag_part1.id=Article.id AND Article.id=A_U.a_id AND A_U.u_id=User.id;
