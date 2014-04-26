@@ -1,0 +1,36 @@
+Create database test24;
+Use test24;
+Create table Article(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,url varchar(30),price Decimal,content varchar(30));
+Create table Category(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,descriprion varchar(30),date_created_on date);
+Create table User(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,name varchar(30),age int,picture_url varchar(80));
+Create table Tag(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,description varchar(30),second_priority float);
+Create table C_U(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,c_id int,u_id int);
+Create table U_T(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,u_id int,t_id int);
+
+Insert into Article(url,price,content) values ('asdasda',10,'asdasd'),('asdasd',12,'asdasdsa');
+Insert into Category(descriprion,date_created_on) values ('sdfsdfsd','1992-1-1'),('sdfsdf','1992-1-2');
+Insert into User(name,age,picture_url) values ('adsfsdfsd',15,'dsfsdf'),('sfsdfgs',17,'gdfgdfg');
+Insert into Tag(description,second_priority) values ('sdfsdfsd',35),('gsdgsdfsd',41);
+Insert into C_U(c_id,u_id) values (1,1),(2,2);
+Insert into U_T(u_id,t_id) values (1,2),(2,1);
+
+Select User.id From Article,Category,C_U,User Where Article.id=1 AND Article.id=Category.id AND Category.id=C_U.c_id AND C_U.u_id=User.id;
++----+
+| id |
++----+
+|  1 |
++----+
+1 row in set (0.02 sec)
+
+Create table Category_part1(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,date_created_on date);
+Insert into Category_part1(date_created_on) select date_created_on from Category;
+Alter table Category drop column date_created_on;
+Rename table Category to Category_part2;
+
+Select Tag.id From Category_part1,C_U,User,U_T,Tag Where Category_part1.id=2 AND Category_part1.id=C_U.c_id AND C_U.u_id=User.id AND User.id=U_T.u_id AND U_T.t_id=Tag.id;
++----+
+| id |
++----+
+|  1 |
++----+
+1 row in set (0.01 sec)
