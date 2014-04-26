@@ -1,0 +1,32 @@
+Create database test21;
+Use test21;
+Create table Article(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,published_on date,url varchar(80),content varchar(200));
+Create table Category(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,description varchar(30),name varchar(30));
+Create table User(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,password varchar(30),income float,age int);
+Create table Tag(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,priority int,second_priority float,c_id int,a_id int);
+
+Insert into Article(published_on,url,content) values ('1992-1-1','sdasda','asdasd'),('1992-1-2','asdasd','afdsfsdf');
+Insert into Category(description,name) values ('dsfsdfsdf','sdfsdfsd'),('fsdfsdf','asdasd');
+Insert into User(password,income,age) values ('sadagsdf',10,12),('sdfsdfsdf',15,17);
+Insert into Tag(priority,second_priority,c_id,a_id) values (24,27,1,1),(17,22,2,2);
+
+Select Article.id From Category,Tag,Article Where Category.id=1 AND Category.id=Tag.c_id AND Tag.a_id=Article.id;
++----+
+| id |
++----+
+|  1 |
++----+
+1 row in set (0.00 sec)
+
+Create table Tag_part1(id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,second_priority float);
+Insert into Tag_part1(second_priority) select second_priority from Tag;
+Alter table Tag drop column second_priority;
+Rename table Tag to Tag_part2;
+
+Select User.id From Tag_part2,Article,User Where Tag_part2.id=2 AND Tag_part2.a_id=Article.id AND Article.id=User.id;
++----+
+| id |
++----+
+|  2 |
++----+
+1 row in set (0.00 sec)
